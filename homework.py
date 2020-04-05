@@ -1,6 +1,6 @@
 import datetime as dt
 
-class Record: #Complite
+class Record:
     def __init__(self, amount, comment, date=None):
         date_format = '%d.%m.%Y'
         if date==None: date = dt.datetime.now()
@@ -9,26 +9,23 @@ class Record: #Complite
         self.comment=comment
         self.date=date.date()
 
-class Calculator: #complite
+class Calculator:
     def __init__(self, limit):
         self.limit=limit
         self.records=[]
 
-
-    def add_record(self, record): #complite
+    def add_record(self, record):
         self.records.append(record)
 
-    def get_today_stats(self): #complite
+    def get_today_stats(self):
         spend_today=0
         today=dt.datetime.now().date()
-        
         for i in self.records:
-#            print(i.date,today)
             if i.date==today:
                 spend_today+=i.amount
         return spend_today
 
-    def get_week_stats(self): #complite
+    def get_week_stats(self):
         spend_week=0
         end_week=dt.datetime.now().date()
         start_week=end_week - dt.timedelta(days=6)
@@ -37,12 +34,10 @@ class Calculator: #complite
                 spend_week+=i.amount
         return spend_week            
 
-class CashCalculator(Calculator): #complite
+class CashCalculator(Calculator):
     USD_RATE = 60.00
     EURO_RATE = 70.00
     def get_today_cash_remained(self, currency):
-#        self.USD_RATE = 60.00
-#        self.EURO_RATE = 70.00
         spend_today=(self.get_today_stats())
         if spend_today==self.limit:
             return('Денег нет, держись')
@@ -78,9 +73,7 @@ class CaloriesCalculator(Calculator):
         else:
             return('Хватит есть!')
 
-
-
-
+# data for testing
 if __name__=='__main__':
     cash_calculator = CashCalculator(1000)
     cash_calculator.add_record(Record(amount=150, comment="Test 37", date="01.9.2019"))
