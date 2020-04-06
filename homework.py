@@ -4,10 +4,13 @@ import datetime as dt
 class Record:
     def __init__(self, amount, comment, date=None):
         date_format = '%d.%m.%Y'
+
         if date is None: 
             date = dt.datetime.now()
+
         else: 
             date = dt.datetime.strptime(date, date_format)
+
         self.amount = amount 
         self.comment = comment
         self.date = date.date()
@@ -47,12 +50,16 @@ class CashCalculator(Calculator):
                   'eur': [self.EURO_RATE, 'Euro']} 
         remains = abs(self.limit-spend_today)
         exchange_rate, currency_type = answer[currency]
+
         if spend_today == self.limit:
             return 'Денег нет, держись' 
+
         elif spend_today < self.limit:
             answer_str = 'На сегодня осталось'
+
         elif spend_today > self.limit:
             answer_str = 'Денег нет, держись: твой долг -'
+
         return '{0} {1} {2}'.format(answer_str, round(remains/exchange_rate,
                                     2), currency_type)
 
@@ -60,8 +67,10 @@ class CashCalculator(Calculator):
 class CaloriesCalculator(Calculator):
     def get_calories_remained(self):
         get_calories_today = self.get_today_stats()
+
         if get_calories_today < self.limit:
             remains = self.limit-get_calories_today
+            
             return 'Сегодня можно съесть что-нибудь ещё, но с общей калорийностью не более {} кКал'.format(remains)
         return 'Хватит есть!'
 
