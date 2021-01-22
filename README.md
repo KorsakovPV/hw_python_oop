@@ -1,7 +1,7 @@
 # hw_python_oop
 Sprint 2. Итоговый проект.
 
-[![Yamdb-app workflow](https://github.com/KorsakovPV/hw_python_oop/workflows/hw_python_oop/badge.svg)](https://github.com/KorsakovPV/yamdb_final/actions)
+[![hw_python_oop-app workflow](https://github.com/KorsakovPV/hw_python_oop/workflows/hw_python_oop/badge.svg)](https://github.com/KorsakovPV/yamdb_final/actions)
 
 Учебный проект. Призванный познакомить с ООП.
 
