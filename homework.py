@@ -41,10 +41,10 @@ class Calculator:
     def get_week_stats(self):
         end_week = dt.datetime.now().date()
         start_week = end_week - dt.timedelta(days=6)
-        spend_week = sum([i.amount if i.date <= end_week
-                                      and i.date >= start_week else 0 for i in
-                          self.records]
-                         )
+        spend_week = sum(
+            [i.amount if end_week >= i.date >= start_week else 0 for i in
+             self.records]
+        )
         return spend_week
 
 
@@ -91,8 +91,7 @@ class CaloriesCalculator(Calculator):
             remains = self.limit - get_calories_today
 
             return 'Сегодня можно съесть что-нибудь ещё, но с общей ' \
-                   'калорийностью не более {} кКал'.format(
-                remains)
+                   'калорийностью не более {} кКал'.format(remains)
         return 'Хватит есть!'
 
 
@@ -154,10 +153,18 @@ if __name__ == '__main__':
 
     calories_calculator = CaloriesCalculator(2000)
     calories_calculator.add_record(Record(amount=145, comment='кофе'))
-    assert calories_calculator.get_calories_remained() == 'Сегодня можно съесть что-нибудь ещё, но с общей калорийностью не более 1855 кКал'
+    assert calories_calculator.get_calories_remained() == 'Сегодня можно съе' \
+                                                          'сть что-нибудь ещ' \
+                                                          'ё, но с общей кал' \
+                                                          'орийностью не бол' \
+                                                          'ее 1855 кКал'
     calories_calculator.add_record(Record(amount=500, comment='творог'))
     calories_calculator.add_record(Record(amount=500, comment='йогурт'))
-    assert calories_calculator.get_calories_remained() == 'Сегодня можно съесть что-нибудь ещё, но с общей калорийностью не более 855 кКал'
+    assert calories_calculator.get_calories_remained() == 'Сегодня можно съе' \
+                                                          'сть что-нибудь ещ' \
+                                                          'ё, но с общей кал' \
+                                                          'орийностью не бол' \
+                                                          'ее 855 кКал'
     calories_calculator.add_record(Record(amount=855, comment='торт'))
     assert calories_calculator.get_calories_remained() == 'Хватит есть!'
     calories_calculator.add_record(Record(amount=855, comment='торт'))
