@@ -1,12 +1,12 @@
+"""Калькулятор денег и калорий."""
 import datetime as dt
 
 
 class Record:
-    """
-    Класс используется только для хранения данных записей.
-    """
+    """Класс используется только для хранения данных записей."""
 
     def __init__(self, amount, comment, date=None):
+        """Инициализация класса Record."""
         date_format = '%d.%m.%Y'
 
         if date is None:
@@ -21,24 +21,26 @@ class Record:
 
 
 class Calculator:
-    """
-    Базовый класс. Реализует общие методы.
-    """
+    """Базовый класс. Реализует общие методы."""
 
     def __init__(self, limit):
+        """Инициализация класса Calculator."""
         self.limit = limit
         self.records = []
 
     def add_record(self, record):
+        """Метод добавляет запись в list."""
         self.records.append(record)
 
     def get_today_stats(self):
+        """Метод вычисляет сколько денег или калорий потрачено сегодня."""
         today = dt.datetime.now().date()
         spend_today = sum([i.amount if i.date == today else 0
                            for i in self.records])
         return spend_today
 
     def get_week_stats(self):
+        """Метод вычисляет сколько денег или калорий потрачено за неделю."""
         end_week = dt.datetime.now().date()
         start_week = end_week - dt.timedelta(days=6)
         spend_week = sum(
@@ -50,14 +52,18 @@ class Calculator:
 
 class CashCalculator(Calculator):
     """
+    Класс CashCalculator.
+
     Класс наследует базовый класс и реализует весь функционал связанный с
     деньгами.
+
     """
 
     USD_RATE = 60.00
     EURO_RATE = 70.00
 
     def get_today_cash_remained(self, currency):
+        """Метод вычесляет сколько денег можно потратить сегодня."""
         spend_today = self.get_today_stats()
         answer = {'rub': [1, 'руб'],
                   'usd': [self.USD_RATE, 'USD'],
@@ -80,11 +86,15 @@ class CashCalculator(Calculator):
 
 class CaloriesCalculator(Calculator):
     """
+    Класс CaloriesCalculator.
+
     Класс наследует базовый класс и реализует весь функционал связанный с
     калориями.
+
     """
 
     def get_calories_remained(self):
+        """Метод вычисляет сколько еще можно съесть сегодня."""
         get_calories_today = self.get_today_stats()
 
         if get_calories_today < self.limit:
